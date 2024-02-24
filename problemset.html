@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Set</title>
+</head>
+
+<body>
+    <h2>Problem Set</h2>
+    <div id="ptitle"><div data-pid="9" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">9. five numebr </div><div data-pid="5" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">45. give modulo</div><div data-pid="3" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">43. add two numberss</div><div id="2" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">42. add two numbers</div><div data-pid="23" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">423. welcome to problem</div>
+        <div data-pid="16" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">416. solve this </div>
+        <div data-pid="12" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">solve this </div>
+
+    </div>
+</body>
+<script>
+    // Client-side JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    var divs = document.querySelectorAll('div[data-pid]');
+    divs.forEach(function(div) {
+        div.addEventListener('click', function() {
+            var pid = this.getAttribute('data-pid');
+            window.location.href = '/problemset/' + pid;
+        });
+    });
+});
+
+</script>
+</html>
