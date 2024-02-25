@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo/fav.jpeg">
     <title>Your Page Title</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Segoe UI',sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: #f7f7f7;
             color: #333;
         }
@@ -32,10 +34,10 @@
             padding: 15px;
             color: #000000;
             text-decoration: none;
-            transition:0.3s;
-        
-  border-bottom: 0.5px solid black;
-  
+            transition: 0.3s;
+
+            border-bottom: 0.5px solid black;
+
 
         }
 
@@ -48,32 +50,39 @@
             overflow: hidden;
             color: #333;
             position: fixed;
-            top :0;
+            top: 0;
             height: 65px;
             width: 100%;
-            display: flex; /* Make the navbar items align horizontally */
+            display: flex;
+            /* Make the navbar items align horizontally */
         }
-     
 
-.horizontal-navbar a {
-    display: flex; /* Make the links a flex container */
-    align-items: center; /* Center the content vertically */
-    text-decoration: none;
-    color: #000000; /* Set text color to white */
-    padding: 10px 20px; /* Add padding to the links for spacing */
-    transition: background-color 0.3s; /* Add a smooth transition for background color */
-}
 
-.horizontal-navbar a:hover {
-    background-color: #b3b8b2;
-    color: #ffffff;/* Change background color on hover */
-}
+        .horizontal-navbar a {
+            display: flex;
+            /* Make the links a flex container */
+            align-items: center;
+            /* Center the content vertically */
+            text-decoration: none;
+            color: #000000;
+            /* Set text color to white */
+            padding: 10px 20px;
+            /* Add padding to the links for spacing */
+            transition: background-color 0.3s;
+            /* Add a smooth transition for background color */
+        }
 
-/* Optional: Add styles for active link */
-.horizontal-navbar a.active {
-    background-color: #777;
-    color: #fffdfd;
-}   
+        .horizontal-navbar a:hover {
+            background-color: #b3b8b2;
+            color: #ffffff;
+            /* Change background color on hover */
+        }
+
+        /* Optional: Add styles for active link */
+        .horizontal-navbar a.active {
+            background-color: #777;
+            color: #fffdfd;
+        }
 
 
 
@@ -95,38 +104,41 @@
         }
     </style>
 </head>
+
 <body>
     <div class="horizontal-navbar">
-        <div style="height: 65px; width: 155px;float: left;  padding: 10px 20px; "><img style="height: 50px; width: 155px;"  src="Logo/logo2-removebg-preview.png" alt="Logo"></div>
-    <a href="#">Tutorials</a>
-        <a href="#">Quiz</a>
-        <a href="#">Practice</a>
-        <a href="#">Refernces</a>
-        <a href="#" style="margin-left: 50%;"> login/signup</a>
+        <div style="height: 65px; width: 155px;float: left;  padding: 10px 20px; "><img
+                style="height: 50px; width: 155px;" src="/logo/logo.jpeg" alt="Logo"></div>
+        <a href="/getcourse">Tutorials</a>
+        <a href="/quiz">Quiz</a>
+        <a href="/problemset">Practice</a>
+
+
     </div>
 
-    <div class="vertical-navbar"> <a href="/CSS Introduction.html" target="display">CSS Introduction</a> <a href="/CSS Syntax.html" target="display">CSS Syntax</a>
-         <a href="/CSS Padding.html" target="display">CSS Padding</a> 
-         
-         <a href="/CSS Height, Width and Max-width.html" target="display">CSS Height, Width and Max-width</a>
-          <a href="/CSS Outline.html" target="display">CSS Outline</a>
-           <a href="/CSS Layout - Overflow.html" target="display">CSS Layout - Overflow</a> 
-           <a href="/CSS Combinators.html" target="display">CSS Combinators</a>
-            <a href="/CSS Navigation Bar.html" target="display">CSS Navigation Bar</a>
-             <a href="/CSS Border Images.html" target="display">CSS Border Images</a>
-              <a href="/CSS Transitions.html" target="display">CSS Transitions</a> 
-              <a href="/CSS Pagination Examples.html" target="display">CSS Pagination Examples</a> 
-              <a href="/CSS Counters.html" target="display">CSS Counters</a>
-               <a href="/CSS Website Layout.html" target="display">CSS Website Layout</a>
-      
+    <div class="vertical-navbar"> <a href="/CSS Introduction.html" target="display">CSS Introduction</a> <a
+            href="/CSS Syntax.html" target="display">CSS Syntax</a>
+        <a href="/CSS Padding.html" target="display">CSS Padding</a>
+
+        <a href="/CSS Height, Width and Max-width.html" target="display">CSS Height, Width and Max-width</a>
+        <a href="/CSS Outline.html" target="display">CSS Outline</a>
+        <a href="/CSS Layout - Overflow.html" target="display">CSS Layout - Overflow</a>
+        <a href="/CSS Combinators.html" target="display">CSS Combinators</a>
+        <a href="/CSS Navigation Bar.html" target="display">CSS Navigation Bar</a>
+        <a href="/CSS Border Images.html" target="display">CSS Border Images</a>
+        <a href="/CSS Transitions.html" target="display">CSS Transitions</a>
+        <a href="/CSS Pagination Examples.html" target="display">CSS Pagination Examples</a>
+        <a href="/CSS Counters.html" target="display">CSS Counters</a>
+        <a href="/CSS Website Layout.html" target="display">CSS Website Layout</a>
+
     </div>
 
-  
+
 
     <div class="centered-div">
         <iframe class="showing" src="/CSS Introduction.html" name="display"></iframe>
     </div>
 
 </body>
-</html>
 
+</html>
