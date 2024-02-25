@@ -88,10 +88,10 @@ app.get("/addproblem", (req, res) => {
     res.sendFile(filePath)
 })
 app.post("/addproblem", (req, res) => {
-    const { pid, ptitle, pstatement, input1, output1, input2, output2,solution } = req.body;
+    const { pid, difficulty, ptitle, pstatement, input1, output1, input2, output2, solution} = req.body;
 
-    const sql = "INSERT INTO problemset (pid, ptitle, pstatement, input1, output1, input2, output2,solution) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    conn.query(sql, [pid, ptitle, pstatement, input1, output1, input2, output2,solution], (err, result) => {
+    const sql = "INSERT INTO problemset (pid, difficulty, ptitle, pstatement, input1, output1, input2, output2, solution) VALUES (?,? , ?, ?, ?, ?, ?, ?, ?)";
+    conn.query(sql, [pid, difficulty, ptitle, pstatement, input1, output1, input2, output2, solution], (err, result) => {
         if (err) {
             console.error('Error adding problem to the database:', err);
             res.status(500).send("Error adding problem to the database");
@@ -101,8 +101,8 @@ app.post("/addproblem", (req, res) => {
                     console.error('Error reading problemset.html file:', err);
                     res.status(500).send("Error reading problemset.html file");
                 } else {
-                    const newDiv = `<div data-pid="${pid}" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">${pid}. ${ptitle}</div>`;
-                    const updatedHTML = data.replace('<div id="ptitle">', `<div id="ptitle">${newDiv}`);
+                    const newDiv = `<div data="${pid}"><div data-pid="${pid}">${pid}</div><div data-ptitle="${ptitle}">${ptitle}</div><div data-diff="${difficulty}">${difficulty}</div><div data-sol="sol">solution</div></div>`;
+                    const updatedHTML = data.replace('</div></body>', `${newDiv}</div></body>`);
                     fs.writeFile(path.join(__dirname, 'problemset.html'), updatedHTML, (err) => {
                         if (err) {
                             console.error('Error writing to problemset.html file:', err);
