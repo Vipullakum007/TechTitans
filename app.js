@@ -102,6 +102,21 @@ app.post("/login", (req, res) => {
     });
 });
 
+//user profile
+
+app.get('/profile', (req, res) => {
+  conn.query('SELECT username FROM user', (error, results) => {
+    if (error) {
+      console.error('Error executing query: ' + error.stack);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    const username = results[0].username;
+
+    res.render('profile', { username: username });
+  });
+});
+
 app.get("/logout",(req,res)=>{
     console.log(req.session.user);
     fs.readFile(path.join(__dirname,'index.html'), 'utf8', (err, data) => {
