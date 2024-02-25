@@ -53,7 +53,7 @@ app.post("/sighup", function (req, res) {
     });
 
 })
-// login
+
 app.get("/login", function (req, res) {
     //debug
     compiler.flush(function () {
@@ -102,7 +102,6 @@ app.post("/login", (req, res) => {
     });
 });
 
-//user profile
 
 app.get('/profile', (req, res) => {
   conn.query('SELECT username FROM user', (error, results) => {
@@ -112,7 +111,6 @@ app.get('/profile', (req, res) => {
       return;
     }
     const username = results[0].username;
-
     res.render('profile', { username: username });
   });
 });
@@ -138,7 +136,6 @@ app.get("/logout",(req,res)=>{
     res.redirect('/login')
 })
 
-// add problem
 app.get("/addproblem", (req, res) => {
     //debug
     compiler.flush(function () {
@@ -216,7 +213,6 @@ app.post('/submitcode/:pid',(req,res)=>{
   res.json({ message: 'Submission successful' });
 });
 
-// problemset page
 app.get("/problemset", (req, res) => {
     //debug
     compiler.flush(function () {
