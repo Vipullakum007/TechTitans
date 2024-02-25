@@ -60,6 +60,9 @@ CodeAcademy is a web application designed to help users learn programming langua
 2. Install dependencies using `npm install`.
 3. Set up the database connection in `db.js`.
 4. Run the application using `npm start`.
+5. Change dataase password and name from db.js
+6. import datbase from repo to mysql workbench
+7. Run app.js file
 
 ## Technologies Used
 - Node.js
@@ -68,6 +71,7 @@ CodeAcademy is a web application designed to help users learn programming langua
 - HTML
 - CSS
 - JavaScript
+- EJS
 - CodeMirror
 - Quill.js
 
