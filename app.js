@@ -406,6 +406,11 @@ app.get("/cpp", function (req, res) {
     res.sendFile(fpath);
 })
 
+app.get("/html", function (req, res) {
+    const fpath = path.join(__dirname, 'html.html');
+    res.sendFile(fpath);
+})
+
 // quiz rendering handling
 app.get("/quiz", (req, res) => {
     const fpath = path.join(__dirname, 'quiz.html');
