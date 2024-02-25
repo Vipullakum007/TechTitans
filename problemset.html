@@ -5,23 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Problem Set</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #b1abab;
+        }
+        #ptitle
+        {
+            gap: 10px;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #ddd;
+            padding: 40px;
+            background-color: #d6d2d2;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);     
+        }
+        [data] {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 100px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 2px 2px 0 rgb(0, 0, 0);
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        [data]:hover {
+    box-shadow: 0 8px 16px 0 rgb(0, 0, 0);
+  }
+
+        [data-pid], [data-ptitle], [data-diff],[data-sol] {
+            flex-basis: calc(33.33% - 20px);
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+    
+
 </head>
 
 <body>
     <h2>Problem Set</h2>
-    <div id="ptitle"><div data-pid="9" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">9. five numebr </div><div data-pid="5" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">45. give modulo</div><div data-pid="3" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">43. add two numberss</div><div id="2" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">42. add two numbers</div><div data-pid="23" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">423. welcome to problem</div>
-        <div data-pid="16" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">416. solve this </div>
-        <div data-pid="12" style="padding: 10px; border: 1px solid #ccc; margin: 10px;">solve this </div>
-
-    </div>
-</body>
+    <div id="ptitle"><div data="8"><div data-pid="8">8</div><div data-ptitle="Jadeja">Jadeja</div><div data-diff="hard">hard</div><div data-sol="sol">solution</div></div>
+    <div data="42"><div data-pid="42">42</div><div data-ptitle="program3">program3</div><div data-diff="easy">easy</div></div>
+    <div data="41"><div data-pid="41">41</div><div data-ptitle="program2">program2</div><div data-diff="hard">hard</div></div>
+    <div data="40"><div data-pid="40">40</div><div data-ptitle="program">program</div><div data-diff="medium">medium</div></div>
+    <div data="111"><div data-pid="111">111</div><div data-ptitle="Rohit">Rohit</div><div data-diff="easy">easy</div><div data-sol="sol">solution</div></div><div data="56"><div data-pid="56">56</div><div data-ptitle="Bobzy the King">Bobzy the King</div><div data-diff="hard">hard</div><div data-sol="sol">solution</div></div><div data="98"><div data-pid="98">98</div><div data-ptitle="Bobzy the King">Bobzy the King</div><div data-diff="hard">hard</div><div data-sol="sol">solution</div></div></div></body>
 <script>
     // Client-side JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-    var divs = document.querySelectorAll('div[data-pid]');
+    var divs = document.querySelectorAll('div[data]');
     divs.forEach(function(div) {
         div.addEventListener('click', function() {
-            var pid = this.getAttribute('data-pid');
+            var pid = this.querySelector('[data-pid]').getAttribute('data-pid');
             window.location.href = '/problemset/' + pid;
         });
     });
