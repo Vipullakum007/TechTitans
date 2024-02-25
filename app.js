@@ -6,6 +6,8 @@ const path = require("path")
 const compiler = require("compilex")
 const conn = require('./db');
 const options = { stats: true }
+const session=require("express-session")
+const cookieParser=require("cookie-parser")
 compiler.init(options)
 let currentman="";
 const app = express();
@@ -15,6 +17,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/codemirror-5.65.16", express.static("codemirror-5.65.16"))
 app.set('view engine', 'ejs');
+app.use(cookieParser());
+app.use(session({
+    resave:true,
+    saveUninitialized:true,
+    secret:"secret"
+}))
 
 app.set('views', path.join(__dirname, 'views'));
 
@@ -73,10 +81,47 @@ app.post("/login", (req, res) => {
             const result=results[0];
             currentman=String(result.user_id);
             console.log(currentman);
-            res.redirect('/');
+           req.session.user=result;
+           req.session.save();
+           fs.readFile(path.join(__dirname,'index.html'), 'utf8', (err, data) => {
+            if (err) {
+                res.status(500).send("Error reading index.html file");
+            } else {   
+                const updatedHTML = data.replace(`<li style="display: block;"><a href="/login"  >Login/Signup</a></li>`,`<li style="display: none;"><a href="/login"  >Login/Signup</a></li>`);
+                fs.writeFile(path.join(__dirname, 'index.html'), updatedHTML, (err) => {
+                    if (err) {
+                        console.error('Error writing to problemset.html file:', err);
+                        res.status(500).send("Error writing to problemset.html file");
+                    } else {
+                      
+                    }
+                });
+            }
+        }); res.redirect('/');
         }
     });
 });
+
+app.get("/logout",(req,res)=>{
+    console.log(req.session.user);
+    fs.readFile(path.join(__dirname,'index.html'), 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).send("Error reading index.html file");
+        } else {   
+            const updatedHTML = data.replace(`<li style="display: none;"><a href="/login"  >Login/Signup</a></li>`,`<li style="display: block;"><a href="/login"  >Login/Signup</a></li>`);
+            fs.writeFile(path.join(__dirname, 'index.html'), updatedHTML, (err) => {
+                if (err) {
+                    console.error('Error writing to problemset.html file:', err);
+                    res.status(500).send("Error writing to problemset.html file");
+                } else {
+                  
+                }
+            });
+        }
+    });
+    req.session.destroy();
+    res.redirect('/login')
+})
 
 // add problem
 app.get("/addproblem", (req, res) => {
