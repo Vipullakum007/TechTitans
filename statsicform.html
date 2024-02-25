@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +13,16 @@
     <script src="codemirror-5.65.16/mode/clike/clike.js"></script>
     <link rel="stylesheet" href="codemirror-5.65.16/theme/dracula.css">
     <script src="codemirror-5.65.16/addon/edit/closebrackets.js"></script>
+    <link rel="icon" type="image/png" href="logo/fav.jpeg">
 </head>
+
 <body>
     <form action="/submit" method="post" id="section-form">
         <label for="sectionName">lanuage Name:</label>
         <input type="text" id="lanname" name="lanname" required>
         <label for="sectionName">Section Name:</label>
         <input type="text" id="sectionName" name="sectionName" required>
-    
+
         <label for="sectionDescription">Section Description:</label>
         <div id="editor"></div>
         <textarea id="sectionDescription" name="sectionDescription" style="display:none;"></textarea>
@@ -44,7 +47,7 @@
                 ]
             }
         });
-    
+
         document.getElementById('section-form').addEventListener('submit', function (event) {
             debugger
             var sectionDescription = quill.root.innerHTML;
@@ -52,4 +55,5 @@
         });
     </script>
 </body>
+
 </html>
