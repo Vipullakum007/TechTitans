@@ -389,22 +389,53 @@ app.post('/submit', (req, res) => {
     res.send('File created successfully!');
 });
 
-app.get("/python",function (req,res){
-const fpath=path.join(__dirname,'python.html');
-res.sendFile(fpath);
-})
-app.get("/css",function (req,res){
-    const fpath=path.join(__dirname,'css.html');
+app.get("/python", function (req, res) {
+    const fpath = path.join(__dirname, 'python.html');
     res.sendFile(fpath);
-    })
-app.get("/javascript",function (req,res){
-        const fpath=path.join(__dirname,'javascript.html');
-        res.sendFile(fpath);
-        })
-app.get("/cpp",function (req,res){
-            const fpath=path.join(__dirname,'cpp.html');
-            res.sendFile(fpath);
-            })
+})
+app.get("/css", function (req, res) {
+    const fpath = path.join(__dirname, 'css.html');
+    res.sendFile(fpath);
+})
+app.get("/java", function (req, res) {
+    const fpath = path.join(__dirname, 'java.html');
+    res.sendFile(fpath);
+})
+app.get("/javascript", function (req, res) {
+    const fpath = path.join(__dirname, 'javascript.html');
+    res.sendFile(fpath);
+})
+app.get("/cpp", function (req, res) {
+    const fpath = path.join(__dirname, 'cpp.html');
+    res.sendFile(fpath);
+})
+
+// quiz rendering handling
+app.get("/quiz", (req, res) => {
+    const fpath = path.join(__dirname, 'quiz.html');
+    res.sendFile(fpath);
+})
+
+app.get("/c_quiz.html", (req, res) => {
+    const fpath = path.join(__dirname, 'c_quiz.html');
+    res.sendFile(fpath);
+})
+app.get("/cpp_quiz.html", (req, res) => {
+    const fpath = path.join(__dirname, 'cpp_quiz.html');
+    res.sendFile(fpath);
+})
+app.get("/java_quiz.html", (req, res) => {
+    const fpath = path.join(__dirname, 'java_quiz.html');
+    res.sendFile(fpath);
+})
+app.get("/python_quiz.html", (req, res) => {
+    const fpath = path.join(__dirname, 'python_quiz.html');
+    res.sendFile(fpath);
+})
+app.get("/aboutus", (req, res) => {
+    const fpath = path.join(__dirname, 'aboutUs.html');
+    res.sendFile(fpath);
+})
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
