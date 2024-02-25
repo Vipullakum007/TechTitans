@@ -21,6 +21,7 @@
   -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.075);
   -moz-box-shadow: 0 2px 5px rgba(0,0,0,0.075);
   text-align: center;
+  justify-content: center;
 }
 
 .image {
@@ -56,6 +57,7 @@ p {
 }
 
 .logout-button {
+    margin-top: 20px;
     display: block;
     width: 100%;
     padding: 10px 20px;
@@ -72,6 +74,25 @@ p {
 .logout-button:hover {
     background-color: #e74c3c;
 }
+
+.submissions {
+    display: block;
+    width: 60%;
+    padding: 10px 20px;
+    margin-left : 80px;
+    background-color: #279623;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submissions:hover {
+    background-color: #27751d;
+}
     </style>
 </head>
 <body>
@@ -81,6 +102,9 @@ p {
     
   </div>
   <h2><%= username %></h2><br><br><br>
+  <form action="/submissinos" method="GET">
+    <button type="submit" class="submissions">View My Submissions</button>
+</form>
   <form action="/logout" method="GET">
     <button type="submit" class="logout-button">Logout</button>
 </form>
