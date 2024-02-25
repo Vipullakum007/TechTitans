@@ -6,10 +6,10 @@ const path = require("path")
 const compiler = require("compilex")
 const conn = require('./db');
 const options = { stats: true }
-const session=require("express-session")
-const cookieParser=require("cookie-parser")
+const session = require("express-session")
+const cookieParser = require("cookie-parser")
 compiler.init(options)
-let currentman="";
+let currentman = "";
 const app = express();
 const port = 8000;
 app.use(body.json())
@@ -19,17 +19,17 @@ app.use("/codemirror-5.65.16", express.static("codemirror-5.65.16"))
 app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(session({
-    resave:true,
-    saveUninitialized:true,
-    secret:"secret"
+    resave: true,
+    saveUninitialized: true,
+    secret: "secret"
 }))
 
 app.set('views', path.join(__dirname, 'views'));
 
-app.get("/",function(req,res){
-const fpath=path.join(__dirname,'index.html')
-res.sendFile(fpath)
-}) 
+app.get("/", function (req, res) {
+    const fpath = path.join(__dirname, 'index.html')
+    res.sendFile(fpath)
+})
 
 app.get("/signup", function (req, res) {
     compiler.flush(function () {
@@ -48,7 +48,7 @@ app.post("/sighup", function (req, res) {
             console.error('Error signing up:', err);
             res.status(500).send("Error signing up");
         } else {
-            res.redirect('/');
+            res.redirect('/login');
         }
     });
 
@@ -63,10 +63,7 @@ app.get("/login", function (req, res) {
     res.sendFile(filePath)
 
 })
-app.get("/css",function(req,res){
-    const filePath = path.join(__dirname, 'home.html');
-    res.sendFile(filePath)
-})
+
 
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
@@ -78,56 +75,51 @@ app.post("/login", (req, res) => {
         } else if (results.length === 0) {
             res.status(401).send("Invalid username or password");
         } else {
-            const result=results[0];
-            currentman=String(result.user_id);
+            const result = results[0];
+            currentman = String(result.user_id);
             console.log(currentman);
-           req.session.user=result;
-           req.session.save();
-           fs.readFile(path.join(__dirname,'index.html'), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send("Error reading index.html file");
-            } else {   
-                const updatedHTML = data.replace(`<li style="display: block;"><a href="/login"  >Login/Signup</a></li>`,`<li style="display: none;"><a href="/login"  >Login/Signup</a></li>`);
-                fs.writeFile(path.join(__dirname, 'index.html'), updatedHTML, (err) => {
-                    if (err) {
-                        console.error('Error writing to problemset.html file:', err);
-                        res.status(500).send("Error writing to problemset.html file");
-                    } else {
-                      
-                    }
-                });
-            }
-        }); res.redirect('/');
+            req.session.user = result;
+            req.session.save();
+            fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (err, data) => {
+                if (err) {
+                    res.status(500).send("Error reading index.html file");
+                } else {
+                    const updatedHTML = data.replace(`<li style="display: block;"><a href="/login"  >Login/Signup</a></li>`, `<li style="display: none;"><a href="/login"  >Login/Signup</a></li>`);
+                    fs.writeFile(path.join(__dirname, 'index.html'), updatedHTML, (err) => {
+                        if (err) {
+                            console.error('Error writing to problemset.html file:', err);
+                            res.status(500).send("Error writing to problemset.html file");
+                        } else {
+
+                        }
+                    });
+                }
+            }); res.redirect('/');
         }
     });
 });
 
 
 app.get('/profile', (req, res) => {
-  conn.query('SELECT username FROM user', (error, results) => {
-    if (error) {
-      console.error('Error executing query: ' + error.stack);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-    const username = results[0].username;
+
+    const username = req.session.user.username;
     res.render('profile', { username: username });
-  });
+
 });
 
-app.get("/logout",(req,res)=>{
+app.get("/logout", (req, res) => {
     console.log(req.session.user);
-    fs.readFile(path.join(__dirname,'index.html'), 'utf8', (err, data) => {
+    fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (err, data) => {
         if (err) {
             res.status(500).send("Error reading index.html file");
-        } else {   
-            const updatedHTML = data.replace(`<li style="display: none;"><a href="/login"  >Login/Signup</a></li>`,`<li style="display: block;"><a href="/login"  >Login/Signup</a></li>`);
+        } else {
+            const updatedHTML = data.replace(`<li style="display: none;"><a href="/login"  >Login/Signup</a></li>`, `<li style="display: block;"><a href="/login"  >Login/Signup</a></li>`);
             fs.writeFile(path.join(__dirname, 'index.html'), updatedHTML, (err) => {
                 if (err) {
                     console.error('Error writing to problemset.html file:', err);
                     res.status(500).send("Error writing to problemset.html file");
                 } else {
-                  
+
                 }
             });
         }
@@ -135,6 +127,26 @@ app.get("/logout",(req,res)=>{
     req.session.destroy();
     res.redirect('/login')
 })
+app.get('/submission', (req, res) => {
+    const userId = req.session.user.user_id;
+
+    const query = `SELECT submissions.problem, submissions.code, problemset.ptitle, problemset.pstatement  FROM submissions INNER JOIN problemset ON submissions.problem = problemset.pid WHERE submissions.userid = ?`;
+
+    conn.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error('Error executing query:', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        res.render('submissions', { submissions: results });
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 app.get("/addproblem", (req, res) => {
     //debug
@@ -145,7 +157,7 @@ app.get("/addproblem", (req, res) => {
     res.sendFile(filePath)
 })
 app.post("/addproblem", (req, res) => {
-    const { pid, difficulty, ptitle, pstatement, input1, output1, input2, output2, solution} = req.body;
+    const { pid, difficulty, ptitle, pstatement, input1, output1, input2, output2, solution } = req.body;
 
     const sql = "INSERT INTO problemset (pid, difficulty, ptitle, pstatement, input1, output1, input2, output2, solution) VALUES (?,? , ?, ?, ?, ?, ?, ?, ?)";
     conn.query(sql, [pid, difficulty, ptitle, pstatement, input1, output1, input2, output2, solution], (err, result) => {
@@ -153,7 +165,7 @@ app.post("/addproblem", (req, res) => {
             console.error('Error adding problem to the database:', err);
             res.status(500).send("Error adding problem to the database");
         } else {
-            fs.readFile(path.join(__dirname,'problemset.html'), 'utf8', (err, data) => {
+            fs.readFile(path.join(__dirname, 'problemset.html'), 'utf8', (err, data) => {
                 if (err) {
                     console.error('Error reading problemset.html file:', err);
                     res.status(500).send("Error reading problemset.html file");
@@ -174,8 +186,8 @@ app.post("/addproblem", (req, res) => {
     });
 });
 
-app.get("/getcourse",(req,res)=>{
-    const fpath= path.join(__dirname,'course.html');
+app.get("/getcourse", (req, res) => {
+    const fpath = path.join(__dirname, 'course.html');
     res.sendFile(fpath)
 })
 
@@ -194,23 +206,23 @@ app.get('/problemset/:pid', (req, res) => {
     });
 });
 
-app.post('/submitcode/:pid',(req,res)=>{
-      const pid = req.params.pid;
-  const { code } = req.body;
-   const user=currentman;
-   const query = 'INSERT INTO submissions (userid, problem, code) VALUES (?, ?, ?)';
-  conn.query(query, [user, pid, code], (error, results, fields) => {
-    if (error) {
-      console.error('Error executing insert query:', error);
-      return;
-    }
-    console.log('Insert successful');
-    
-  });
+app.post('/submitcode/:pid', (req, res) => {
+    const pid = req.params.pid;
+    const { code } = req.body;
+    const user = currentman;
+    const query = 'INSERT INTO submissions (userid, problem, code) VALUES (?, ?, ?)';
+    conn.query(query, [user, pid, code], (error, results, fields) => {
+        if (error) {
+            console.error('Error executing insert query:', error);
+            return;
+        }
+        console.log('Insert successful');
+
+    });
 
 
 
-  res.json({ message: 'Submission successful' });
+    res.json({ message: 'Submission successful' });
 });
 
 app.get("/problemset", (req, res) => {
@@ -220,7 +232,7 @@ app.get("/problemset", (req, res) => {
     })
     const filePath = path.join(__dirname, 'problemset.html');
     res.sendFile(filePath)
-    
+
 })
 app.post("/compile", function (req, res) {
     var code = req.body.code
@@ -314,7 +326,7 @@ app.get('/staticform', (req, res) => {
 });
 
 app.post('/submit', (req, res) => {
-    const lanname=req.body.lanname;
+    const lanname = req.body.lanname;
     const sectionName = req.body.sectionName;
     const sectionDescription = req.body.sectionDescription;
     const codesection = req.body.codesection;
@@ -362,8 +374,8 @@ app.post('/submit', (req, res) => {
     </html>`
     const fileName = `public/${sectionName}.html`;
     fs.writeFileSync(fileName, htmlContent);
-    
-    fs.readFile(path.join(__dirname,`${lanname}.html`), 'utf8', (err, data) => {
+
+    fs.readFile(path.join(__dirname, `${lanname}.html`), 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading problemset.html file:', err);
             res.status(500).send("Error reading problemset.html file");
@@ -375,13 +387,13 @@ app.post('/submit', (req, res) => {
                     console.error('Error writing to problemset.html file:', err);
                     res.status(500).send("Error writing to problemset.html file");
                 } else {
-                  
+
                 }
             });
         }
     });
 
-    
+
     res.send('File created successfully!');
 });
 
@@ -405,7 +417,6 @@ app.get("/cpp", function (req, res) {
     const fpath = path.join(__dirname, 'cpp.html');
     res.sendFile(fpath);
 })
-
 app.get("/html", function (req, res) {
     const fpath = path.join(__dirname, 'html.html');
     res.sendFile(fpath);
