@@ -4,16 +4,19 @@
 CodeAcademy is a web application designed to help users learn programming languages, practice coding, and take quizzes. It provides a platform for both learning and assessment.
 
 ### Home Page
-![Home Page](public/logo/sc1.png)
+![Home Page](public/logo/home.png)
 
 ### Course Page
-![Course Page](public/logo/sc2.png)
+![Course Page](public/logo/course.png)
 
 ### Quiz Page
-![Quiz Page](public/logo/sc3.png)
+![Quiz Page](public/logo/quiz.png)
 
 ### Problem Set Page
-![Problem Set Page](public/logo/sc4.png)
+![Problem Set Page](public/logo/problems.png)
+
+### Add Problem Form
+![Add Problem Form](public/logo/addproblem.png)
 
 ## Features
 
