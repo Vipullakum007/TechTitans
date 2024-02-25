@@ -71,6 +71,25 @@ app.post("/login", (req, res) => {
         }
     });
 });
+app.post('/submitcode/:pid',(req,res)=>{
+      const pid = req.params.pid;
+  const { code } = req.body;
+   const user=currentman;
+   const query = 'INSERT INTO submissions (userid, problem, code) VALUES (?, ?, ?)';
+  conn.query(query, [user, pid, code], (error, results, fields) => {
+    if (error) {
+      console.error('Error executing insert query:', error);
+      return;
+    }
+    console.log('Insert successful');
+    
+  });
+
+
+
+  res.json({ message: 'Submission successful' });
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
