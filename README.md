@@ -59,9 +59,9 @@ CodeAcademy is a web application designed to help users learn programming langua
 1. Clone the repository.
 2. Install dependencies using `npm install`.
 3. Set up the database connection in `db.js`.
-4. Run the application using `npm start`.
+4. Run the application using `node app.js`.
 5. Change dataase password and name from db.js
-6. import datbase from repo to mysql workbench
+6. import datbase from databse_tables  to mysql workbench
 7. Run app.js file
 
 ## Technologies Used
